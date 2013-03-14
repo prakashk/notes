@@ -18,9 +18,10 @@ single <kbd>TAB</kbd>. But, I don't do this often either.  Clearly,
 there should be a better way, considering this is Emacs we are talking
 about.
 
-I vaguely remember seeing some function that someone wrote that
-redefined <kbd>C-a</kbd>. I couldn't find it anywhere in my notes, so
-here's my attempt at writing it myself.
+I came across a mention of "smart-beginning of line" on `/r/emacs`
+today, and vaguely remember seeing some function someone wrote
+that redefined <kbd>C-a</kbd>. I couldn't find it anywhere in my
+notes, so here's my attempt at writing it myself.
 
     ;;; smarter beginning-of-line
 

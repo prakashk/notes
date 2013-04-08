@@ -4,13 +4,13 @@ Tags: Emacs
 
 * Using counters in keyboard macros
 
-<F3> - start a macro, or insert counter value when defining a macro
-<F4> - end a macro, or call the last defined macro
+`<F3>` - start a macro, or insert counter value when defining a macro  
+`<F4>` - end a macro, or call the last defined macro  
 
-<C-x C-k C-i> - insert counter value (can be used outside a macro definition too)
-<C-x C-k C-a> - increments current counter value by the prefix argument
-<c-x C-k C-f> - sets the format of the counter value inserted ("%02d")
+`<C-x C-k C-i>` - insert counter value (can be used outside a macro definition too)  
+`<C-x C-k C-a>` - increments current counter value by the prefix argument  
+`<c-x C-k C-f>` - sets the format of the counter value inserted ("%02d")
 
 * Ediff
 
-`!` key recompute the diff.
+`!` - recomputes the diff.

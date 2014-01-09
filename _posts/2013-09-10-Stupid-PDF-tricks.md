@@ -52,7 +52,7 @@ One downside is that the output file (when default `pdftex` is used) appears to 
 
 The `pdftex`-cropped version is 495% larger, while the `xetex`-cropped version is only 10% larger. Huge improvement. Comparing the output files did not reveal any noticeable differences in quality.
 
-It did take a long time to produce the cropped file (13+ minutes). Thanks to the other `pdfcrop` [1] (by Eric Doviak), I discovered that `ghostscript` allows one to specify output resolution (`-r` option), which makes the calculation of the bounding box blazingly fast (in comparison). `pdfcrop` is written in Perl, so I thought it would be easy to patch it to include this option. Then I noticed that there is a `--resolution` option in `pdfcrop`. Using this option made a huge difference.
+It did take a long time to produce the cropped file (13+ minutes). Thanks to the [other `pdfcrop` (by Eric Doviak)] [1], I discovered that `ghostscript` allows one to specify output resolution (`-r` option), which makes the calculation of the bounding box blazingly fast (in comparison). `pdfcrop` is written in Perl, so I thought it would be easy to patch it to include this option. Then I noticed that there is a `--resolution` option in `pdfcrop`. Using this option made a huge difference.
 
     $ time pdfcrop --resolution 72 --xetex --margins 20 onlisp.pdf onlisp-cropped-xetex-r72.pdf
     PDFCROP 1.20, 2009/10/06 - Copyright (c) 2002-2009 by Heiko Oberdiek.
@@ -60,8 +60,10 @@ It did take a long time to produce the cropped file (13+ minutes). Thanks to the
      
     real	0m18.182s
     user	0m17.520s
-    sys	0m0.680s
+    sys	    0m0.680s
 
 Yes. Adding the --resolution option makes the script run in a measly 18 seconds, as opposed to 13+ minutes! The bounding box values are slightly different when using the --resolution option, but so far I haven't noticed any issues because of that.
 
 The version I tested with was `1.20` and is pretty old (2009). Latest version (currently 1.38) can be found at http://www.ctan.org/tex-archive/support/pdfcrop, and seems to add more options including support for `luatex`.
+
+[1]: http://pdfcrop.sourceforge.net/  "Eric Doviak's pdfcrop"

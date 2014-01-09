@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+        <link rel="stylesheet" href="/css/normalize.css">
+        <link rel="stylesheet" href="/css/main.css">
+        <link rel="stylesheet" href="/css/site.css">
+        <script src="/js/vendor/modernizr-2.6.2.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+
+        <!-- Add your site or application content here -->
+<p>Title: Comparing Clojure not= and Perl 6 != operators <br />
+Date: Fri Dec 14 12:40:00 EST 2012 <br />
+Tags: Perl, Perl6, Clojure</p>
+
+<p>In clojure, operators are functions and consequently expressions use prefix notation.</p>
+
+<pre><code>;; Clojure
+user&gt; (= 5 5 6)
+false
+</code></pre>
+
+<p>In Perl 5, it is:</p>
+
+<pre><code># Perl5
+$ (5 == 5 &amp;&amp; 5 == 6) ? "true" : "false"
+false
+</code></pre>
+
+<p>Perl6 is better, as it allows operators to be
+<a href="http://feather.perl6.nl/syn/S03.html#Chained_comparisons">chained</a>:</p>
+
+<pre><code># Perl6 (Rakudo)
+&gt; 5 == 5 == 6
+False
+</code></pre>
+
+<p>The appearance of the expressions is quite different. In Clojure, the
+operator is specified once, followed by the list of operands. In
+Perl6, the infix operator is used between every pair of operands.</p>
+
+<p>Perl6 also offers
+<a href="http://feather.perl6.nl/syn/S03.html#Reduction_operators">reduction operators</a>,
+which make the expressions somewhat similar to Clojure
+expressions. The operator being used is wrapped in square brackets,
+and operates on a list of operands.</p>
+
+<pre><code># Perl6 (Rakudo)
+&gt; [==] 5, 5, 6
+False
+</code></pre>
+
+<p>No surprises, so far.</p>
+
+<p>Clojure's <a href="http://clojuredocs.org/clojure_core/clojure.core/not="><code>not=</code></a> operator:</p>
+
+<pre><code>Same as (not (= obj1 obj2))
+</code></pre>
+
+<p>Examples:</p>
+
+<pre><code>;; Clojure
+user&gt; (not (= 5 5 6))
+true
+user&gt; (not= 5 5 6)
+true
+</code></pre>
+
+<p>In Perl6, using the chained <code>!=</code> operator:</p>
+
+<pre><code># Perl6 (Rakudo)
+&gt; not 5 == 5 == 6
+True
+&gt; !(5 == 5 == 6)                # parenthesis needed, as == binds more tightly than !
+True
+&gt; 5 != 5 != 6
+False                           # != is NOT same as not(==) !!
+</code></pre>
+
+<p>Using reduction operators:</p>
+
+<pre><code># Perl6 (Rakudo)
+&gt; not[==] 5, 5, 6
+True
+&gt; ![==] 5, 5, 6
+True
+&gt; [!=] 5, 5, 6
+False
+</code></pre>
+
+<p>So, in Perl6, the behavior of the reduction operator <code>[!=]</code> is
+consistent with that of the chained operator <code>!=</code>, which is a good
+thing. However, it is not really same as <code>not[==]</code> or <code>![==]</code>.</p>
+
+<p>In Clojure, <code>(not= a b c)</code> is exactly same as <code>(not (= a b
+c))</code>. Something to remember.</p>
+
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.0.min.js"><\/script>')</script>
+        <script src="/js/plugins.js"></script>
+        <script src="/js/main.js"></script>
+
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <script>
+            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g,s)}(document,'script'));
+        </script>
+    </body>
+</html>

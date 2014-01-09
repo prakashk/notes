@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+        <link rel="stylesheet" href="/css/normalize.css">
+        <link rel="stylesheet" href="/css/main.css">
+        <link rel="stylesheet" href="/css/site.css">
+        <script src="/js/vendor/modernizr-2.6.2.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+
+        <!-- Add your site or application content here -->
+<p>Title: Emacs goto-line with feedback <br />
+Date: Fri Dec 28 13:32:43 2012 <br />
+Tags: Emacs</p>
+
+<p>Found this on Magnars'
+<a href="http://whattheemacsd.com/key-bindings.el-01.html">What the .emacs.d?</a>
+blog:</p>
+
+<p>When <kbd>M-g g</kbd> (<code>goto-line</code>) is pressed, it prompts for the
+line number to go to. If line numbers are displayed in the current
+buffer, it would be easy to find the number of the line to go to and
+enter. If not, one might first enable line numbers, find the line
+number to go to and run the function and then disable line numbers
+again.</p>
+
+<p>This function does away with the tedium of this process, and
+temporarily enables line numbers when <code>goto-line</code> is run.</p>
+
+<pre><code>(defun goto-line-with-feedback ()
+  "Show line numbers temporarily, while prompting for the line number input"
+  (interactive)
+  (unwind-protect
+      (progn
+        (linum-mode 1)
+        (goto-line (read-number "Goto line: ")))
+    (linum-mode -1)))
+</code></pre>
+
+<p>Line numbers are turned off, once the function is completed.</p>
+
+<p>That last part, however, is a minor problem, since the line numbers
+are unconditionally turned off. Even if line numbers were on to begin
+with. This is fixed with a slight change. Remember if the line-numbers
+were on or off, and turn them on/off only when needed.</p>
+
+<pre><code>(defun goto-line-with-feedback ()
+  "Show line numbers temporarily, while prompting for the line number input"
+  (interactive)
+  (let ((line-numbers-off-p (not linum-mode)))
+    (unwind-protect
+        (progn
+          (when line-numbers-off-p
+            (linum-mode 1))
+          (call-interactively 'goto-line))
+      (when line-numbers-off-p
+        (linum-mode -1)))))
+</code></pre>
+
+<p>That's it.</p>
+
+<p>Another very useful tip I found from the same post:</p>
+
+<pre><code>(global-set-key [remap goto-line] 'goto-line-with-feedback)
+</code></pre>
+
+<p>The new function is quite useful that I would like to use it all the
+time and replace the default <code>goto-line</code> with the new, enhanced
+function. Which means I rebind the new function to the same key
+sequence that originally was bound to <code>goto-line</code>.</p>
+
+<p>Normally, I'd have something like this, where the key sequence is
+hard-coded:</p>
+
+<pre><code>(global-set-key (kbd "M-g g") 'goto-line-with-feedback)
+</code></pre>
+
+<p>However, using
+<a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Remapping-Commands.html"><code>remap</code></a>
+eliminates the hard-coding. It takes the key-binding assigned
+currently to <code>goto-line</code> and re-binds it to the new function.</p>
+
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.0.min.js"><\/script>')</script>
+        <script src="/js/plugins.js"></script>
+        <script src="/js/main.js"></script>
+
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <script>
+            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g,s)}(document,'script'));
+        </script>
+    </body>
+</html>

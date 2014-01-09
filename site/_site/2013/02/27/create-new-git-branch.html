@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+        <link rel="stylesheet" href="/css/normalize.css">
+        <link rel="stylesheet" href="/css/main.css">
+        <link rel="stylesheet" href="/css/site.css">
+        <script src="/js/vendor/modernizr-2.6.2.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+
+        <!-- Add your site or application content here -->
+<p>Title: Create new local and remote branch in a git repo <br />
+Date: Wed Feb 27 16:24:49 2013 <br />
+Tags: git</p>
+
+<p>Via: <a href="http://www.zorched.net/2008/04/14/start-a-new-branch-on-your-remote-git-repository/">Zorched/One-Line Fix</a></p>
+
+<h1>Creating remote branch and local copy of it</h1>
+
+<ul>
+<li><p>Create the remote branch</p>
+
+<p><code>git push origin origin:refs/heads/new_branch_name</code></p></li>
+<li><p>Make sure everything is up-to-date</p>
+
+<p><code>git fetch origin</code></p></li>
+<li><p>See the branch created</p>
+
+<p><code>git branch -r</code></p></li>
+<li><p>Start tracking the new branch</p>
+
+<p><code>git checkout --track -b new_branch_name origin/new_branch_name</code></p>
+
+<p>This will make <code>git pull</code> update the local branch.</p></li>
+<li><p>Make sure everything is up-to-date</p>
+
+<p><code>git pull</code></p></li>
+</ul>
+
+<h2>Deleting a remote branch</h2>
+
+<pre><code>`git push origin :heads/new_branch_name`
+</code></pre>
+
+<h1>Easier way</h1>
+
+<p>A commenter (Olivier Clavel) suggested an easier method made possible since git 1.7.0:</p>
+
+<ul>
+<li><p>Create the local branch first, from a current one</p>
+
+<p><code>git checkout -b new_branch_name</code></p></li>
+<li><p>Push that branch to the remote</p>
+
+<p><code>git push origin new_branch_name</code></p>
+
+<p>Now, local branch can push to remote.</p></li>
+<li><p>Set the upstream branch to track</p>
+
+<p><code>git branch --set-upstream new_branch_name origin/new_branch_name</code></p>
+
+<p>Now, local branch can pull from remote branch too.</p></li>
+<li><p>Deleting remote branch</p>
+
+<p><code>git push origin :new_branch_name</code></p></li>
+</ul>
+
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.0.min.js"><\/script>')</script>
+        <script src="/js/plugins.js"></script>
+        <script src="/js/main.js"></script>
+
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <script>
+            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g,s)}(document,'script'));
+        </script>
+    </body>
+</html>

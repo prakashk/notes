@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+        <link rel="stylesheet" href="/css/normalize.css">
+        <link rel="stylesheet" href="/css/main.css">
+        <link rel="stylesheet" href="/css/site.css">
+        <script src="/js/vendor/modernizr-2.6.2.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+
+        <!-- Add your site or application content here -->
+<p>Title: Smarter beginning-of-line in emacs <br />
+Date: Thu Mar 14 10:39:20 2013 <br />
+Tags: emacs</p>
+
+<p>A while ago, I learned about an Emacs function called
+<code>back-to-indentation</code> which is bound to <kbd>M-m</kbd> by
+default. It moves the cursor to the first non-whitespace character on
+the current line. This is quite useful while coding to edit text at or
+near the beginning of line ignoring the indentation. The problem is I
+can't seem to remember this function, and I always press
+<kbd>C-a</kbd> (<code>move-beginning-of-line</code>), followed by
+<kbd>C-right</kbd> and then <kbd>C-left</kbd>, which takes me to the
+first non-whitespace character. Pretty inefficient way of doing it,
+but it is now in my muscle memory.</p>
+
+<p>We can improve it slightly by replacing the last two key presses by a
+single <kbd>TAB</kbd>. But, I don't do this often either.  Clearly,
+there should be a better way, considering this is Emacs we are talking
+about.</p>
+
+<p>I came across a mention of "smart-beginning of line" on <code>/r/emacs</code>
+today, and vaguely remember seeing some function someone wrote
+that redefined <kbd>C-a</kbd>. I couldn't find it anywhere in my
+notes, so here's my attempt at writing it myself.</p>
+
+<pre><code>;;; smarter beginning-of-line
+
+(defun smart-beginning-of-line ()
+  "Move to beginning of line. If point is already at beginning of
+   line, move to first non-whitespace character on the line."
+  (interactive)
+  (if (bolp)
+      (back-to-indentation)
+    (move-beginning-of-line 1)))
+
+(global-set-key [remap move-beginning-of-line] 'smart-beginning-of-line)
+</code></pre>
+
+<p>The last line remaps the current key bound to the
+<code>move-beginning-of-line</code> (or <kbd>C-a</kbd>) to the newly defined
+function. So, pressing <kbd>C-a</kbd> once takes me to beginning of
+the line as usual. Press it twice and cursor is at the first text
+character on the line. Even though it is two keystrokes, it is faster
+than pressing <kbd>C-a</kbd> and <kbd>TAB</kbd>.</p>
+
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.0.min.js"><\/script>')</script>
+        <script src="/js/plugins.js"></script>
+        <script src="/js/main.js"></script>
+
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <script>
+            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g,s)}(document,'script'));
+        </script>
+    </body>
+</html>

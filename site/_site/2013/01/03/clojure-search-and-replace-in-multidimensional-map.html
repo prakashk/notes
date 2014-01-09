@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+        <link rel="stylesheet" href="/css/normalize.css">
+        <link rel="stylesheet" href="/css/main.css">
+        <link rel="stylesheet" href="/css/site.css">
+        <script src="/js/vendor/modernizr-2.6.2.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+
+        <!-- Add your site or application content here -->
+<p>Title: Clojure: Search and Replace in multidimensional map <br />
+Date: Thu Jan  3 16:22:17 2013 <br />
+Tags: Clojure</p>
+
+<p>Came across an interesting little problem on <a href="http://www.reddit.com/r/Clojure/comments/15jvcx/how_to_search_and_replace_in_multidimensional_map/">r/clojure</a>:</p>
+
+<blockquote>
+  <p>I have a map like this;</p>
+  
+  <p>{:a [[1 2] [3 4] [5 6]] :b [[7 8] [9 10]] :c [[11 12]]}</p>
+  
+  <p>Each value is a vector containing any number of subvectors, each of which contains exactly two ints.</p>
+  
+  <p>I can't figure out how to find and replace one of the vector pairs. For example, if I wanted to find [7 8] and replace it with [17 18], the resulting map would be;</p>
+  
+  <p>{:a [[1 2] [3 4] [5 6]] :b [[17 18] [9 10]] :c [[11 12]]}</p>
+  
+  <p>Preserving the order isn't important.</p>
+</blockquote>
+
+<p>Here's what I got:</p>
+
+<pre><code>(def my-map {:a [[1 2] [3 4] [5 6]] :b [[7 8] [9 10]] :c [[11 12]]})
+
+(letfn [(my-replace [v a b]
+          (vec (map #(if (= a %) b %) v)))]
+  (into {}
+        (for [[k v] my-map]
+          {k (my-replace v [7 8] [17 18])})))
+</code></pre>
+
+<p>Of course, clojure already has <a href="http://clojuredocs.org/clojure_core/clojure.core/replace"><code>replace</code></a> function, directly applicable in this situation (<a href="http://www.reddit.com/r/Clojure/comments/15jvcx/how_to_search_and_replace_in_multidimensional_map/c7nrzij">this solution used it</a>):</p>
+
+<blockquote>
+  <p>clojure.core/replace <br />
+  ([smap coll]) <br />
+    Given a map of replacement pairs and a vector/collection, returns a
+    vector/seq with any elements = a key in smap replaced with the
+    corresponding val in smap</p>
+</blockquote>
+
+<p>Using it, the <code>my-replace</code> helper function definition is no longer needed.</p>
+
+<pre><code>(into {}
+      (for [[k v] m]
+           {k (replace {[7 8] [17 18]} v)}))
+</code></pre>
+
+<p>The main difference is the way the search and replace arguments are passed: <code>replace</code> expects them to be passed as a map, which allows one to pass multiple search/replace arguments together.</p>
+
+<p><a href="http://www.reddit.com/r/Clojure/comments/15jvcx/how_to_search_and_replace_in_multidimensional_map/c7n9636">Another interesting solution</a> used the <code>reduce-kv</code> function, available in clojure 1.4:</p>
+
+<blockquote>
+  <p>clojure.core/reduce-kv <br />
+  ([f init coll]) <br />
+    Reduces an associative collection. f should be a function of 3
+    arguments. Returns the result of applying f to init, the first key
+    and the first value in coll, then applying f to that result and the
+    2nd key and value, etc. If coll contains no entries, returns init
+    and f is not called. Note that reduce-kv is supported on vectors,
+    where the keys will be the ordinals.</p>
+</blockquote>
+
+<pre><code>(defn replace
+  [data replace with]
+  (reduce-kv (fn [acc k v]
+                    (let [new-v (map #(if (= replace %) with %) v)]
+                      (assoc acc k new-v))) data data))
+</code></pre>
+
+<p>I still need to be more comfortable with <code>reduce</code> and friends. Also, for some reason, <code>assoc</code> never comes to mind when thinking about possible approaches.</p>
+
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.0.min.js"><\/script>')</script>
+        <script src="/js/plugins.js"></script>
+        <script src="/js/main.js"></script>
+
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <script>
+            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g,s)}(document,'script'));
+        </script>
+    </body>
+</html>

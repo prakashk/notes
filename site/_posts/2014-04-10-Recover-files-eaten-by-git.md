@@ -1,5 +1,5 @@
-Title: Recover files eaten by git
-Date: Thu Apr 10 13:54:21 2014
+Title: Recover files eaten by git  
+Date: Thu Apr 10 13:54:21 2014  
 Tags: git
 
 Git ate my files. This is how it happened.

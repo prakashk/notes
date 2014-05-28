@@ -12,12 +12,12 @@ Tags: haskell
 
 # Courses
 
+* [Introduction to Haskell](http://www.seas.upenn.edu/~cis194/), U Penn CIS 194, Brent Yorgey
+* [Functional Systems in Haskell](http://www.scs.stanford.edu/14sp-cs240h/), Standofrd CS240h, Brian O' Sullivan
 * http://shuklan.com/haskell/
 * http://www.cs.tufts.edu/~kfisher/teaching.html
 * https://www.inf.ed.ac.uk/teaching/courses/inf1/fp/ (P Wadler)
 * http://www.cs.princeton.edu/~dpw/cos441-11/schedule.htm
-* http://blog.davidterei.com/2011/10/stanford-haskell-course.h...
-* http://www.seas.upenn.edu/~cis194/
 
 # Books
 

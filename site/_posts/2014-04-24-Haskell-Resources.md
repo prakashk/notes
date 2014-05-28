@@ -24,4 +24,9 @@ Tags: haskell
 * Beginning Haskell, by Alejandro Serrano Mena ([amazon](http://www.amazon.com/Beginning-Haskell-A-Project-Based-Approach/dp/1430262508))
 * Programming in Haskell, by Graham Hutton ([amazon](http://www.amazon.com/Programming-Haskell-Graham-Hutton/dp/0521692695))
 * The Haskell School of Music — From Signals to Symphonies, by Paul Hudak ([link](http://haskell.cs.yale.edu/?post_type=publication&p=112))
+* [Parallel and Concurrent Programming in Haskell](http://chimera.labs.oreilly.com/books/1230000000929/index.html), by Simon Marlow
 
+# List of Haskell Lists
+
+* Stephen Diehl's [A Haskell Reading List](http://www.stephendiehl.com/posts/essential_haskell.html) -- list of papers and writings of what he considers are essential Haskell reading.
+* [Roadmap to learning Haskell](https://github.com/bitemyapp/learnhaskell) by [`bitemyapp`](http://bitemyapp.com/)

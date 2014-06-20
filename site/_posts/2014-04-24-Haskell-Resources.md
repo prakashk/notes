@@ -13,7 +13,7 @@ Tags: haskell
 # Courses
 
 * [Introduction to Haskell](http://www.seas.upenn.edu/~cis194/), U Penn CIS 194, Brent Yorgey
-* [Functional Systems in Haskell](http://www.scs.stanford.edu/14sp-cs240h/), Standofrd CS240h, Brian O' Sullivan
+* [Functional Systems in Haskell](http://www.scs.stanford.edu/14sp-cs240h/), Standofrd CS240h, Brian O' Sullivan ([Lecture notes](http://www.scs.stanford.edu/14sp-cs240h/slides/))
 * http://shuklan.com/haskell/
 * http://www.cs.tufts.edu/~kfisher/teaching.html
 * https://www.inf.ed.ac.uk/teaching/courses/inf1/fp/ (P Wadler)

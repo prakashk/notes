@@ -30,3 +30,9 @@ Tags: haskell
 
 * Stephen Diehl's [A Haskell Reading List](http://www.stephendiehl.com/posts/essential_haskell.html) -- list of papers and writings of what he considers are essential Haskell reading.
 * [Roadmap to learning Haskell](https://github.com/bitemyapp/learnhaskell) by [`bitemyapp`](http://bitemyapp.com/)
+
+# Videos
+
+* [Tony Morris](http://vimeo.com/tag:Tony+Morris)
+** [Explain List Folds to Yourself - BFPG 2013-04-23](http://vimeo.com/64673035)
+

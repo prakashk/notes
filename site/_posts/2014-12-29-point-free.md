@@ -4,15 +4,15 @@ Tags: haskell
 
 A defining feature of a functional programming language is the ability to compose functions to create a new function: _composability_. Haskell makes it particularly easy to do this:
 
-   f = g . h
+    f = g . h
 
 where, `g` and `h` are functions and composing them using the `.` (dot) operator creates a new function `f`. This is equivalent to:
 
-   f x = g (h x)
+    f x = g (h x)
 
 The function `h` is called first with an argument `x`, and the result of this function application is passed as input argument to the other function `g`. So, the return type of function `h` should match the input type of function `g`. Hence the type of the `.` operator:
 
-   (.) :: (b -> c) -> (a -> b) -> (a -> c)
+    (.) :: (b -> c) -> (a -> b) -> (a -> c)
 
 In haskell, operators are functions too. So the `(.)` function takes two functions as arguments and returns a third function composing the two input functions.
 
